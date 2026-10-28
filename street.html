@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Street Wave | A Christian youth community</title>
+<meta name="description" content="Street Wave is a Christian community for young people. Share your story, find your people and grow in your faith journey.">
+<meta property="og:title" content="Street Wave | A Christian youth community">
+<meta property="og:description" content="Share your story, find your people and grow in your faith journey.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#070B2A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#070B2A; --deep:#0E1648; --wave:#3B7BFF; --sun:#FFB21A; --coral:#FF6A4D; --text:#EEF1FF; --muted:#AAB3E0;
+  --glass:rgba(18,26,86,.55); --line:rgba(160,180,255,.22);
+  --display:"Bowlby One","Arial Black",Impact,sans-serif;
+  --body:"Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(120% 80% at 50% 0%,#14226B 0%,var(--night) 60%);color:var(--text);font:400 1.0625rem/1.65 var(--body);overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+main,header,footer{position:relative;z-index:1}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+
+header{position:fixed;top:0;left:0;right:0;z-index:20;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(7,11,42,.45);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{font:1.25rem var(--display);text-decoration:none;letter-spacing:.02em}
+nav{display:flex;gap:clamp(12px,3vw,28px);align-items:center}
+nav a{text-decoration:none;font-weight:500;color:var(--muted);transition:color .2s}
+nav a:hover{color:var(--text)}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--sun),#FF8A3D);color:#1A1030;text-decoration:none;font:600 1rem var(--body);padding:14px 28px;border:0;border-radius:999px;cursor:pointer;box-shadow:0 8px 30px rgba(255,150,40,.35);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,150,40,.5)}
+.btn.ghost{background:transparent;color:var(--text);border:1.5px solid var(--line);box-shadow:none;backdrop-filter:blur(6px)}
+.btn.ghost:hover{border-color:var(--text)}
+.btn.small{padding:9px 20px;font-size:.95rem}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:80px}
+.hero .copy{max-width:640px}
+.hero h1{font:clamp(2.8rem,8.5vw,6.6rem)/.98 var(--display);text-transform:uppercase;text-shadow:0 8px 40px rgba(0,0,0,.45)}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em}
+.hero h1 .line span{display:inline-block;transform:translateY(110%);animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .line:nth-child(2) span{animation-delay:.18s;background:linear-gradient(90deg,var(--sun),var(--coral));-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes rise{to{transform:none}}
+.hero p{margin:24px 0 32px;font-size:1.2rem;color:var(--muted);max-width:40ch;opacity:0;animation:fade 1s .6s forwards}
+.hero .btns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fade 1s .8s forwards}
+@keyframes fade{to{opacity:1}}
+.scroll{position:absolute;bottom:28px;left:50%;width:26px;height:42px;border:2px solid var(--line);border-radius:14px;transform:translateX(-50%)}
+.scroll::after{content:"";position:absolute;top:8px;left:50%;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--sun);animation:dot 1.6s infinite}
+@keyframes dot{0%{opacity:1;transform:none}100%{opacity:0;transform:translateY(14px)}}
+
+section{padding:clamp(64px,10vw,120px) 0}
+h2.title{font:clamp(1.9rem,5vw,3.1rem)/1.05 var(--display);margin-bottom:14px}
+.sub{max-width:54ch;margin-bottom:44px;color:var(--muted)}
+
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:20px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s,transform .8s}
+.reveal.in{opacity:1;transform:none}
+
+/* verse */
+.verse .glass{padding:clamp(24px,5vw,48px);display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:flex-end}
+.verse blockquote{font:clamp(1.3rem,3vw,2.1rem)/1.3 var(--display);max-width:28ch}
+.verse cite{display:block;margin-top:14px;color:var(--sun);font-style:normal;font-weight:600}
+
+/* journey: 3D tilt cards */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px;perspective:1000px;counter-reset:s}
+.step{padding:28px 24px;counter-increment:s;transform-style:preserve-3d;transition:transform .15s ease-out,box-shadow .3s;will-change:transform}
+.step::before{content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--sun),var(--coral));color:#1A1030;font:1.1rem var(--display);margin-bottom:16px;transform:translateZ(40px)}
+.step h3{font:1.25rem var(--display);margin-bottom:8px;transform:translateZ(24px)}
+.step p{color:var(--muted)}
+
+/* events */
+.event{display:grid;grid-template-columns:84px 1fr auto;gap:20px;align-items:center;padding:20px 24px;margin-bottom:16px;transition:transform .25s}
+.event:hover{transform:translateX(6px)}
+.date{background:linear-gradient(135deg,var(--sun),var(--coral));color:#1A1030;border-radius:14px;text-align:center;padding:10px 0;font:1.6rem/1 var(--display)}
+.date small{display:block;font:600 .8rem var(--body);letter-spacing:.06em}
+.event h3{font:600 1.15rem var(--body)}
+.event p{color:var(--muted);font-size:.98rem}
+@media(max-width:600px){.event{grid-template-columns:70px 1fr}.event .btn{grid-column:1/-1;justify-self:start}}
+
+/* forms */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:start}
+.story{padding:20px 22px;margin-bottom:16px}
+.story b{display:block;margin-top:10px;color:var(--sun)}
+form{display:flex;flex-direction:column;gap:12px}
+label{font-weight:600}
+input,textarea{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;background:rgba(7,11,42,.6);color:var(--text);font:1rem var(--body)}
+input::placeholder,textarea::placeholder{color:#7C86BC}
+textarea{min-height:110px;resize:vertical}
+.msg{min-height:1.6em;font-weight:500;color:var(--sun)}
+.wall{list-style:none;padding:0;display:grid;gap:12px;margin-top:20px}
+.wall li{padding:14px 18px;border-radius:14px;border:1px dashed var(--line);background:rgba(18,26,86,.4)}
+.wall small{display:block;color:var(--muted)}
+
+.join .glass{padding:clamp(28px,6vw,64px);text-align:center}
+.join form{max-width:460px;margin:0 auto;text-align:left}
+.join .sub{margin-inline:auto}
+footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.95rem;backdrop-filter:blur(10px);background:rgba(7,11,42,.5)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+@media(max-width:560px){nav .hide-sm{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}.hero h1 .line span{transform:none}.hero p,.hero .btns,.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">STREET WAVE</a>
+    <nav aria-label="Main">
+      <a class="hide-sm" href="#journey">Journey</a>
+      <a class="hide-sm" href="#events">Events</a>
+      <a class="hide-sm" href="#stories">Stories</a>
+      <a class="btn small" href="#join">Join us</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero wrap">
+    <div class="copy">
+      <h1 aria-label="Your story. His wave.">
+        <span class="line"><span>Your story.</span></span>
+        <span class="line"><span>His wave.</span></span>
+      </h1>
+      <p>A Christian community for young people. Come as you are, find your people and grow in your faith, one step at a time.</p>
+      <div class="btns">
+        <a class="btn" href="#join">Join the wave</a>
+        <a class="btn ghost" href="#stories">Share your story</a>
+      </div>
+    </div>
+    <div class="scroll" aria-hidden="true"></div>
+  </div>
+
+  <section class="verse reveal">
+    <div class="wrap">
+      <div class="glass">
+        <figure><blockquote id="vText"></blockquote><cite id="vRef"></cite></figure>
+        <button class="btn ghost small" id="vBtn" type="button">Show another verse</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="wrap">
+      <h2 class="title reveal">Every journey starts somewhere</h2>
+      <p class="sub reveal">Your faith is your own. These are the steps many of us walk through, and you can start at any one of them.</p>
+      <div class="steps reveal">
+        <div class="step glass" data-tilt><h3>Come as you are</h3><p>You don't need to have it figured out. Questions and doubts are welcome here.</p></div>
+        <div class="step glass" data-tilt><h3>Meet Jesus</h3><p>Hear who He is, read the Bible with others and talk to God in your own words.</p></div>
+        <div class="step glass" data-tilt><h3>Grow together</h3><p>Join a small group, pray with friends and keep each other going on hard days.</p></div>
+        <div class="step glass" data-tilt><h3>Make waves</h3><p>Serve your school, street and city. Use what you've been given to lift others up.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="events">
+    <div class="wrap">
+      <h2 class="title reveal">Gather with us</h2>
+      <p class="sub reveal">Replace these examples with your real dates and places.</p>
+      <div id="eventList" class="reveal"></div>
+    </div>
+  </section>
+
+  <section id="stories">
+    <div class="wrap cols">
+      <div class="reveal">
+        <h2 class="title">Stories from the wave</h2>
+        <p class="sub">Real stories from young people about what God is doing in their lives.</p>
+        <div id="storyList"></div>
+        <form id="storyForm" novalidate>
+          <label for="sName">Your first name</label>
+          <input id="sName" autocomplete="given-name" required>
+          <label for="sText">Your story</label>
+          <textarea id="sText" required placeholder="What has your journey with God looked like so far?"></textarea>
+          <button class="btn" type="submit">Share my story</button>
+          <p class="msg" id="sMsg" role="status"></p>
+        </form>
+      </div>
+      <div class="reveal">
+        <h2 class="title">Prayer wall</h2>
+        <p class="sub">Need someone to pray with you? Leave a request. You can stay anonymous.</p>
+        <form id="prayerForm" novalidate>
+          <label for="pText">Prayer request</label>
+          <textarea id="pText" required placeholder="How can we pray for you?"></textarea>
+          <label for="pName">Name (optional)</label>
+          <input id="pName" autocomplete="given-name">
+          <button class="btn" type="submit">Post request</button>
+          <p class="msg" id="pMsg" role="status"></p>
+        </form>
+        <ul class="wall" id="wall"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="join reveal" id="join">
+    <div class="wrap">
+      <div class="glass">
+        <h2 class="title">Ready to join the wave?</h2>
+        <p class="sub">Leave your email and a leader will message you with our next meetup and how to get connected.</p>
+        <form id="joinForm" novalidate>
+          <label for="jEmail">Email address</label>
+          <input id="jEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+          <button class="btn" type="submit">Connect me</button>
+          <p class="msg" id="jMsg" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; <span id="yr"></span> Street Wave. Made by young people, for young people.</span>
+    <a href="#top">Back to top</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ================= 3D SCENE ================= */
+(function(){
+  const canvas = document.getElementById("bg");
+  if(!window.THREE){ return; }
+  let renderer;
+  try{ renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true}); }catch(e){ return; }
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55,1,.1,300);
+
+  /* animated wave of glowing points */
+  const geo = new THREE.PlaneGeometry(160,160,230,230);
+  geo.rotateX(-Math.PI/2);
+  const waveMat = new THREE.ShaderMaterial({
+    uniforms:{uTime:{value:0}},
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+    vertexShader:`
+      uniform float uTime; varying float vH; varying float vD;
+      void main(){
+        vec3 p = position;
+        float h = sin(p.x*.18+uTime*.8)*1.7 + sin(p.z*.22+uTime*.6)*1.5 + sin((p.x+p.z)*.11+uTime*.5)*1.3;
+        p.y += h; vH = h;
+        vec4 mv = modelViewMatrix*vec4(p,1.);
+        vD = -mv.z;
+        gl_PointSize = clamp(2.6*(70./vD),1.,5.);
+        gl_Position = projectionMatrix*mv;
+      }`,
+    fragmentShader:`
+      varying float vH; varying float vD;
+      void main(){
+        vec2 c = gl_PointCoord-.5; float d = length(c);
+        if(d>.5) discard;
+        float a = smoothstep(.5,.0,d) * smoothstep(110.,30.,vD);
+        vec3 low = vec3(.15,.36,1.); vec3 high = vec3(1.,.72,.12);
+        vec3 col = mix(low,high,smoothstep(.5,4.2,vH));
+        gl_FragColor = vec4(col,a*.9);
+      }`
+  });
+  const waves = new THREE.Points(geo,waveMat);
+  waves.position.y = -3;
+  scene.add(waves);
+
+  /* glowing 3D cross */
+  const cross = new THREE.Group();
+  const mat = new THREE.MeshStandardMaterial({color:0xffc24a,emissive:0xff9a1f,emissiveIntensity:.9,metalness:.6,roughness:.25});
+  const v = new THREE.Mesh(new THREE.BoxGeometry(1.5,7,1.5),mat);
+  const h = new THREE.Mesh(new THREE.BoxGeometry(4.6,1.5,1.5),mat); h.position.y = 1.2;
+  cross.add(v,h);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(6,.06,16,120),new THREE.MeshBasicMaterial({color:0x6ea0ff,transparent:true,opacity:.7}));
+  const ring2 = ring.clone(); ring2.scale.set(1.35,1.35,1.35); ring2.material = ring.material.clone(); ring2.material.opacity = .35;
+  cross.add(ring,ring2);
+  scene.add(cross);
+  scene.add(new THREE.AmbientLight(0x8899ff,.6));
+  const key = new THREE.PointLight(0xffb040,2.2,60); key.position.set(0,6,10); scene.add(key);
+  const rim = new THREE.PointLight(0x3b7bff,1.8,80); rim.position.set(-12,4,-6); scene.add(rim);
+
+  /* floating dust */
+  const N = 500, dp = new Float32Array(N*3);
+  for(let i=0;i<N;i++){ dp[i*3]=(Math.random()-.5)*70; dp[i*3+1]=Math.random()*30-2; dp[i*3+2]=(Math.random()-.5)*50-5; }
+  const dg = new THREE.BufferGeometry(); dg.setAttribute("position",new THREE.BufferAttribute(dp,3));
+  const dust = new THREE.Points(dg,new THREE.PointsMaterial({color:0xbfd0ff,size:.12,transparent:true,opacity:.65,depthWrite:false}));
+  scene.add(dust);
+
+  /* interaction */
+  const mouse = {x:0,y:0}, cam = {x:0,y:6,z:24}, tgt = {x:0,y:6,z:24}; let prog = 0;
+  addEventListener("pointermove",e=>{ mouse.x = e.clientX/innerWidth*2-1; mouse.y = e.clientY/innerHeight*2-1; });
+  function onScroll(){ const m = document.documentElement.scrollHeight-innerHeight; prog = m>0 ? scrollY/m : 0; }
+  addEventListener("scroll",onScroll,{passive:true}); onScroll();
+
+  function resize(){
+    const w = innerWidth, hgt = innerHeight;
+    renderer.setSize(w,hgt,false);
+    camera.aspect = w/hgt; camera.updateProjectionMatrix();
+    cross.userData.baseX = w>900 ? 7.5 : 0;
+    cross.userData.s = w>900 ? 1 : .7;
+    cross.scale.setScalar(cross.userData.s);
+  }
+  addEventListener("resize",resize); resize();
+
+  const clock = new THREE.Clock();
+  function frame(){
+    const t = reduce ? 0 : clock.getElapsedTime();
+    waveMat.uniforms.uTime.value = t;
+    /* camera follows scroll + mouse */
+    tgt.x = -prog*10 + mouse.x*2.2;
+    tgt.y = 6 - prog*3 - mouse.y*1.2;
+    tgt.z = 24 - prog*9;
+    cam.x += (tgt.x-cam.x)*.05; cam.y += (tgt.y-cam.y)*.05; cam.z += (tgt.z-cam.z)*.05;
+    camera.position.set(cam.x,cam.y,cam.z);
+    camera.lookAt(0,2,0);
+    /* cross floats, spins, drifts with scroll */
+    cross.position.x = cross.userData.baseX*(1-prog*1.4);
+    cross.position.y = 5 + Math.sin(t*.9)*.5 - prog*2;
+    cross.rotation.y = t*.45 + mouse.x*.4;
+    cross.rotation.x = Math.sin(t*.5)*.08 - mouse.y*.15;
+    ring.rotation.x = t*.5; ring.rotation.y = t*.3;
+    ring2.rotation.x = -t*.35; ring2.rotation.z = t*.25;
+    dust.rotation.y = t*.01;
+    renderer.render(scene,camera);
+    if(!reduce) requestAnimationFrame(frame);
+  }
+  frame();
+  if(reduce) addEventListener("scroll",frame,{passive:true});
+})();
+
+/* ================= PAGE CONTENT (edit here) ================= */
+const VERSES = [
+  ["Let no man despise thy youth; but be thou an example of the believers.","1 Timothy 4:12"],
+  ["I can do all things through Christ which strengtheneth me.","Philippians 4:13"],
+  ["Be strong and of a good courage; be not afraid.","Joshua 1:9"],
+  ["Trust in the Lord with all thine heart.","Proverbs 3:5"],
+  ["Be not conformed to this world: but be ye transformed.","Romans 12:2"]
+];
+const EVENTS = [
+  {m:"NOV",d:"08",t:"Friday Night Youth",p:"Worship, a short message and food. Open to everyone ages 13 to 25."},
+  {m:"NOV",d:"15",t:"Street Outreach Day",p:"Serve our neighbourhood together with food and prayer."},
+  {m:"NOV",d:"22",t:"Bible and Chill",p:"Small groups, snacks and honest questions about faith."}
+];
+const STORIES = [
+  {n:"Aarav",t:"I used to think church wasn't for people like me. Here I found friends who prayed for me when I needed it most."},
+  {n:"Maya",t:"Reading the Bible with my group changed how I see my future. I'm not doing this alone anymore."}
+];
+
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const okMail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+let vi = 0;
+function showVerse(){ $("#vText").textContent = "\u201C"+VERSES[vi][0]+"\u201D"; $("#vRef").textContent = VERSES[vi][1]; }
+$("#vBtn").onclick = () => { vi = (vi+1)%VERSES.length; showVerse(); };
+showVerse();
+
+$("#eventList").innerHTML = EVENTS.map(e=>`
+  <div class="event glass">
+    <div class="date">${e.d}<small>${e.m}</small></div>
+    <div><h3>${esc(e.t)}</h3><p>${esc(e.p)}</p></div>
+    <a class="btn small" href="#join">I'm coming</a>
+  </div>`).join("");
+
+function renderStories(){
+  $("#storyList").innerHTML = STORIES.map(s=>`<blockquote class="story glass">${esc(s.t)}<b>${esc(s.n)}</b></blockquote>`).join("");
+}
+renderStories();
+$("#storyForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const n=$("#sName").value.trim(), t=$("#sText").value.trim();
+  if(!n||!t){ $("#sMsg").textContent="Add your name and your story first."; return; }
+  STORIES.unshift({n,t}); renderStories(); e.target.reset();
+  $("#sMsg").textContent="Thank you for sharing. Your story is now on the page.";
+});
+
+const PRAYERS = [];
+$("#prayerForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const t=$("#pText").value.trim(), n=$("#pName").value.trim()||"Anonymous";
+  if(!t){ $("#pMsg").textContent="Write your prayer request first."; return; }
+  PRAYERS.unshift({t,n});
+  $("#wall").innerHTML = PRAYERS.map(p=>`<li>${esc(p.t)}<small>${esc(p.n)}</small></li>`).join("");
+  e.target.reset(); $("#pMsg").textContent="Your request is posted. We're praying with you.";
+});
+
+$("#joinForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const v=$("#jEmail").value.trim();
+  $("#jMsg").textContent = okMail(v) ? "You're in. A leader will email you soon." : "Enter a valid email address, like you@example.com.";
+  if(okMail(v)) e.target.reset();
+});
+
+/* scroll reveal */
+const io = new IntersectionObserver(es=>es.forEach(x=>{ if(x.isIntersecting){ x.target.classList.add("in"); io.unobserve(x.target); } }),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+/* 3D tilt on journey cards */
+document.querySelectorAll("[data-tilt]").forEach(c=>{
+  c.addEventListener("pointermove",e=>{
+    const r = c.getBoundingClientRect(), x = (e.clientX-r.left)/r.width-.5, y = (e.clientY-r.top)/r.height-.5;
+    c.style.transform = `rotateY(${x*16}deg) rotateX(${-y*16}deg) translateZ(10px)`;
+  });
+  c.addEventListener("pointerleave",()=>{ c.style.transform = ""; });
+});
+
+$("#yr").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
